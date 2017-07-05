@@ -1,0 +1,10 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Set the map size based on the device screen size */
+#map {
+  height: 100vh;
+}
