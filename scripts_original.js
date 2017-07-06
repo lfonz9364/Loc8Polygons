@@ -1,6 +1,14 @@
-'use strict';
+$(document).ready()
 
+var redPolygon,
+    greenPolygon,
+    bluePolygon,
+    yellowPolygon,
+    coralPolygon,
+    blackPolygon,
+    purplePolygon;
 
+// Class of polygon
 var polygon = {
     // create polygon with default setting
     createPolygon: function(points, color) {
@@ -11,10 +19,12 @@ var polygon = {
         strokeWeight: 2,
         fillColor: color,
         fillOpacity: 0.35,
+        editable: true,
+        dragable: true
       }));
     },
 
-    // initialize map and polygon
+    // initialize Polygon
     initialize: function() {
         var map,
             polygons = [];
@@ -94,30 +104,6 @@ var polygon = {
                 }
             };
 
-            google.maps.Polygon.prototype._visible = true;
-
-            // Set each polygon visibility hidden
-            google.maps.Polygon.prototype.hide = function(){
-                if (this._visible) {
-                    this._visible = false;
-                    this._strokeOpacity = this.strokeOpacity;
-                    this._fillOpacity = this.fillOpacity;
-                    this.strokeOpacity = 0;
-                    this.fillOpacity = 0;
-                    this.setMap(this.map);
-                }
-            };
-
-            // Set each polygon visibility visible
-            google.maps.Polygon.prototype.show = function() {
-                  if (!this._visible) {
-                      this._visible = true;
-                      this.strokeOpacity = this._strokeOpacity;
-                      this.fillOpacity = this._fillOpacity;
-                      this.setMap(this.map);
-                  }
-            };
-
             // Set map on Chicago
             map = new google.maps.Map(document.querySelector('#map'),{
               center: { lat: 41.83771, lng: -87.85090 },
@@ -125,7 +111,7 @@ var polygon = {
             });
 
             // Default Polygons
-            var redPolygon = this.createPolygon([
+            redPolygon = this.createPolygon([
                     { lat: 41.78500, lng: -87.75133 },
                     { lat: 41.77681, lng: -87.87836 },
                     { lat: 41.80138, lng: -87.92780 },
@@ -137,28 +123,28 @@ var polygon = {
                     { lat: 41.87607, lng: -87.77056 },
                     { lat: 41.78500, lng: -87.75133 }
                   ],
-                  'Red'
-            );
+                  'rgb(255,0,0)'
+              );
 
-            var greenPolygon = this.createPolygon([
+            greenPolygon = this.createPolygon([
                     { lat: 41.739921, lng: -88.047180 },
                     { lat: 41.801887, lng: -88.074646 },
                     { lat: 41.804958, lng: -88.099365 }
-                ],
-                '#00ff00'
-            );
+                  ],
+                  'rgb(0,255,0)'
+              );
 
-            var bluePolygon = this.createPolygon([
+            bluePolygon = this.createPolygon([
                     { lat: 41.961899, lng: -88.119965 },
                     { lat: 41.940962, lng: -87.990189 },
                     { lat: 41.884244, lng: -88.022461 },
                     { lat: 41.878620, lng: -88.060226 },
                     { lat: 41.934833, lng: -88.095932 }
-                ],
-                'Blue'
-            );
+                  ],
+                  'rgb(0,0,255)'
+              );
 
-            var yellowPolygon = this.createPolygon([
+            yellowPolygon = this.createPolygon([
                     { lat: 41.902644, lng: -87.948303 },
                     { lat: 41.952198, lng: -87.920837 },
                     { lat: 41.933811, lng: -87.878265 },
@@ -167,19 +153,19 @@ var polygon = {
                     { lat: 41.900600, lng: -87.837067 },
                     { lat: 41.945559, lng: -87.726517 },
                     { lat: 41.877598, lng: -87.629700 }
-                ],
-                'Yellow'
-            );
+                  ],
+                  'rgb(255,255,0)'
+              );
 
-            var coralPolygon = this.createPolygon([
+            coralPolygon = this.createPolygon([
                     { lat: 41.769119, lng: -88.196182 },
                     { lat: 41.716349, lng: -88.193436 },
                     { lat: 41.762973, lng: -88.117218 }
-                ],
-                'Coral'
-            );
+                  ],
+                  'rgb(255,127,80)'
+              );
 
-            var blackPolygon = this.createPolygon([
+            blackPolygon = this.createPolygon([
                     { lat: 41.842311, lng: -87.680511 },
                     { lat: 41.852541, lng: -87.621460 },
                     { lat: 41.706610, lng: -87.622833 },
@@ -187,18 +173,18 @@ var polygon = {
                     { lat: 41.746069, lng: -87.968903 },
                     { lat: 41.726599, lng: -87.916718 },
                     { lat: 41.741971, lng: -87.677078 }
-                ],
-                'Black'
-            );
+                  ],
+                  'rgb(0,0,0)'
+              );
 
-            var purplePolygon = this.createPolygon([
+            purplePolygon = this.createPolygon([
                     { lat: 41.877086, lng: -88.143311 },
                     { lat: 41.884244, lng: -88.092499 },
                     { lat: 41.836172, lng: -88.088379 },
                     { lat: 41.839753, lng: -88.137817 }
-                ],
-                'Purple'
-            );
+                  ],
+                  'rgb(128,0,128)'
+              );
 
             polygons.push(redPolygon, greenPolygon, bluePolygon, yellowPolygon, coralPolygon, blackPolygon, purplePolygon);
 
@@ -210,7 +196,25 @@ var polygon = {
                   map: map
                 });
             });
-
-            blackPolygon.hide();
+    },
+    // Change opacity values to 0 and rebound polygon
+    hide: function(){
+      if (this._visible) {
+        this._visible = false;
+        this._strokeOpacity = this.strokeOpacity;
+        this._fillOpacity = this.fillOpacity;
+        this.strokeOpacity = 0;
+        this.fillOpacity = 0;
+        this.setMap(this.map);
+      }
+    },
+    // Reset polygon opacity to Default
+    show: function() {
+      if(!this._visible) {
+        this._visible = true;
+        this.strokeOpacity = this._strokeOpacity;
+        this.fillOpacity = this.fillOpacity;
+        this.setMap(this.map);
+      }
     }
 };
