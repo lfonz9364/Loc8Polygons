@@ -1,23 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="style.css">
-  <title>Create Polygons App</title>
+  <title>Map with Polygons App</title>
 </head>
+
 <body>
   <div class="container">
+    <div class="header">
+      <span>Map with Polygons</span>
+      <ul>
+        <li>
+          <input type="checkbox" id="Red" onchange="polygonApp.initialize()" checked>
+          <label>Red</label>
+        </li>
+        <li>
+          <input type="checkbox" id="Green" onchange="polygonApp.initialize()" checked>
+          <label>Green</label>
+        </li>
+        <li>
+          <input type="checkbox" id="Blue" onchange="polygonApp.initialize()" checked>
+          <label>Blue</label>
+        </li>
+        <li>
+          <input type="checkbox" id="Yellow" onchange="polygonApp.initialize()" checked>
+          <label>Yellow</label>
+        </li>
+        <li>
+          <input type="checkbox" id="Coral" onchange="polygonApp.initialize()" checked>
+          <label>Coral</label>
+        </li>
+        <li>
+          <input type="checkbox" id="Black" onchange="polygonApp.initialize()" checked>
+          <label>Black</label>
+        </li>
+        <li>
+          <input type="checkbox" id="Purple" onchange="polygonApp.initialize()" checked>
+          <label>Purple</label>
+        </li>
+      </ul>
+    </div>
     <div id="map" />
   </div>
-  <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-  <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXAejig4wG0_LXpVRHzPgeIwN_cfB0xbI&libraries=geometry&callback=polygon.initialize">
-  </script>
-  <script src="scripts.js" charset="utf-8"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXAejig4wG0_LXpVRHzPgeIwN_cfB0xbI&libraries=geometry&callback=polygonApp.initialize"></script>
+  <script src="script.js" charset="utf-8"></script>
 </body>
+
 </html>
